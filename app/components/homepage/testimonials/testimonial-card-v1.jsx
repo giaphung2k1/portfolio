@@ -22,7 +22,7 @@ const TestimonialCardV1 = ({ testimonial }) => {
 
       {/* Testimonial Text */}
       <p className="text-gray-300 text-sm leading-relaxed mb-6 flex-1 relative z-10">
-        "{text}"
+        &ldquo;{text}&rdquo;
       </p>
 
       {/* Project Badge */}
