@@ -1,7 +1,11 @@
 "use client";
 
 import { projectsData } from '@/utils/data/projects-data';
-import ProjectCard from './project-card';
+
+import ProjectCardV3 from './project-card-v3';
+import ProjectCardV1 from './project-card-v1';
+import ProjectCardV2 from './project-card-v2';
+
 
 const Projects = () => {
 
@@ -18,16 +22,13 @@ const Projects = () => {
       </div>
 
       <div className="pt-24">
-        <div className="flex flex-col gap-6">
-          {projectsData.slice(0, 4).map((project, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          {projectsData.map((project) => (
             <div
-              id={`sticky-card-${index + 1}`}
-              key={index}
-              className="sticky-card w-full mx-auto max-w-2xl sticky"
+              key={project.id}
+              className="w-full"
             >
-              <div className="box-border flex items-center justify-center rounded shadow-[0_0_30px_0_rgba(0,0,0,0.3)] transition-all duration-[0.5s]">
-                <ProjectCard project={project} />
-              </div>
+              <ProjectCardV1 project={project} />
             </div>
           ))}
         </div>
