@@ -8,16 +8,22 @@ const DEFAULT_BTN_CLS =
 const SCROLL_THRESHOLD = 50;
 
 const ScrollToTop = () => {
-  const [btnCls, setBtnCls] = useState(DEFAULT_BTN_CLS);
+  const [isVisible, setIsVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       if (window.scrollY > SCROLL_THRESHOLD) {
-        setBtnCls(DEFAULT_BTN_CLS.replace(" hidden", ""));
+        setIsVisible(true);
       } else {
-        setBtnCls(DEFAULT_BTN_CLS + " hidden");
+        setIsVisible(false);
       }
     };
+    
+    // Check initial scroll position
+    handleScroll();
+    
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll, { passive: true });
@@ -26,8 +32,16 @@ const ScrollToTop = () => {
 
   const onClickBtn = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
+  // Don't render until mounted to avoid hydration mismatch
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <button className={btnCls} onClick={onClickBtn}>
+    <button 
+      className={`${DEFAULT_BTN_CLS} ${!isVisible ? "hidden" : ""}`} 
+      onClick={onClickBtn}
+    >
       <FaArrowUp />
     </button>
   );
